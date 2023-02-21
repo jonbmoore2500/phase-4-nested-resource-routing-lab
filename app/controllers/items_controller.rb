@@ -20,12 +20,23 @@ class ItemsController < ApplicationController
       item = Item.find_by!(id: params[:id])
     end
       render json: item, include: :user
-    end
+  end
+
+  def create
+    user = User.find_by!(id: params[:user_id])
+    new_item = user.items.create(item_params)
+    render json: new_item, status: :created
+  end
+    
 
   private
   
   def render_not_found_response
     render json: { error: "User not found" }, status: :not_found
+  end
+
+  def item_params
+    params.permit(:name, :description, :price)
   end
 
 end
