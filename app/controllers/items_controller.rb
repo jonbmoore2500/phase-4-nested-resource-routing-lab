@@ -19,7 +19,8 @@ class ItemsController < ApplicationController
     else
       item = Item.find_by!(id: params[:id])
     end
-      render json: item, include: :user
+      render json: item
+      # , include: :user
   end
 
   def create
